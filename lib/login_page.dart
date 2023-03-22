@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
                   border: Border(
                     bottom: BorderSide(
                       color: CupertinoColors.systemGrey4,
-                      width: 1.0,
                       style: BorderStyle.solid,
                     ),
                   ),
@@ -49,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
                   border: Border(
                     bottom: BorderSide(
                       color: CupertinoColors.systemGrey4,
-                      width: 1.0,
                       style: BorderStyle.solid,
                     ),
                   ),
