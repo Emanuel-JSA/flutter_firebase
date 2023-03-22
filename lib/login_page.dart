@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'create_account_page.dart';
 import 'password_recovery_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -53,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0),
               CupertinoButton(
                 onPressed: () {
                   Navigator.push(
@@ -63,12 +62,12 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text(
                     'Recover password',
-                    style: TextStyle(color: CupertinoColors.secondaryLabel, fontSize: 16.0),
+                    style: TextStyle(color: CupertinoColors.secondaryLabel, fontSize: 14.0),
                 ),
               ),
-              const SizedBox(height: 24.0),
+              const SizedBox(height: 16.0),
               CupertinoButton(
-                onPressed: () {},
+                onPressed: logIn,
                 color: CupertinoColors.systemBlue,
                 child: Text('Login'),
               ),
@@ -86,6 +85,13 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future logIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
     );
   }
 }
