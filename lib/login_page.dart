@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               CupertinoButton(
                 onPressed: () {
                   Navigator.push(
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     CupertinoPageRoute(builder: (context) => PasswordRecoveryPage()),
                   );
                 },
-                child: Text(
+                child: const Text(
                     'Recover password',
                     style: TextStyle(color: CupertinoColors.secondaryLabel, fontSize: 14.0),
                 ),
@@ -69,9 +69,9 @@ class _LoginPageState extends State<LoginPage> {
               CupertinoButton(
                 onPressed: logIn,
                 color: CupertinoColors.systemBlue,
-                child: Text('Login'),
+                child: const Text('Login'),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 4.0),
               CupertinoButton(
                 onPressed: () {
                   Navigator.push(
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     CupertinoPageRoute(builder: (context) => CreateAccountPage()),
                   );
                 },
-                child: Text('Create account'),
+                child: const Text('Create account'),
               ),
             ],
           ),
@@ -89,9 +89,40 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future logIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    // showCupertinoDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return const CupertinoAlertDialog(
+    //         title: Text('Logging in...'),
+    //         content: CupertinoActivityIndicator(),
+    //       );
+    //     }
+    // );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+    } on FirebaseAuthException catch (e) {
+      showCupertinoDialog(
+          context: context,
+          builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Error'),
+            content: Text(e.message!),
+            actions: [
+              CupertinoDialogAction(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        }
+      );
+    }
   }
 }
