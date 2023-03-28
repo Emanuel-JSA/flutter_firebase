@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CreateAccountPage extends StatefulWidget {
   @override
@@ -12,50 +12,37 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Create Account'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Account'),
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 16.0),
-              CupertinoTextField(
+              TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                placeholder: 'Email',
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CupertinoColors.systemGrey4,
-                      width: 1.0,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 32.0),
-              CupertinoTextField(
+              const SizedBox(height: 32.0),
+              TextField(
                 controller: _passwordController,
                 obscureText: true,
-                placeholder: 'Password',
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CupertinoColors.systemGrey4,
-                      width: 1.0,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 48.0),
-              CupertinoButton(
+              ElevatedButton(
                 onPressed: singUp,
-                color: CupertinoColors.systemBlue,
                 child: Text('Create Account'),
               ),
             ],
@@ -67,23 +54,24 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   Future singUp() async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text);
       print(credential.user);
       print(credential);
       if (credential.user != null) {
         Navigator.pop(context);
       }
     } on FirebaseAuthException catch (e) {
-      showCupertinoDialog(
+      showDialog(
         context: context,
         builder: (context) {
-          return CupertinoAlertDialog(
+          return AlertDialog(
             title: const Text('Error'),
             content: Text(e.message!),
             actions: [
-              CupertinoDialogAction(
-                child: Text('OK'),
+              TextButton(
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -93,6 +81,5 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         },
       );
     }
-
   }
 }

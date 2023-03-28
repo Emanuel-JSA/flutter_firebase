@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import '../styles/styles.dart';
 import 'create_account_page.dart';
 import 'password_recovery_page.dart';
 
@@ -14,72 +15,68 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Login'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 16.0),
-              CupertinoTextField(
+              TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                placeholder: 'Email',
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CupertinoColors.systemGrey4,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 32.0),
-              CupertinoTextField(
+              TextField(
                 controller: _passwordController,
                 obscureText: true,
-                placeholder: 'Password',
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: CupertinoColors.systemGrey4,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 8.0),
-              CupertinoButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(builder: (context) => PasswordRecoveryPage()),
-                  );
-                },
-                child: const Text(
-                    'Recover password',
-                    style: TextStyle(color: CupertinoColors.secondaryLabel, fontSize: 14.0),
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              CupertinoButton(
+              const SizedBox(height: 32.0),
+              ElevatedButton(
                 onPressed: logIn,
-                color: CupertinoColors.systemBlue,
                 child: const Text('Login'),
               ),
               const SizedBox(height: 4.0),
-              CupertinoButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(builder: (context) => CreateAccountPage()),
-                  );
-                },
-                child: const Text('Create account'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CreateAccountPage()),
+                      );
+                    },
+                    child: const Text('Create account'),
+                  ),
+                  Text(' or '),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PasswordRecoveryPage()),
+                      );
+                    },
+                    child: const Text(
+                      'Recover password',
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -104,16 +101,15 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-
     } on FirebaseAuthException catch (e) {
-      showCupertinoDialog(
-          context: context,
-          builder: (context) {
-          return CupertinoAlertDialog(
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
             title: const Text('Error'),
             content: Text(e.message!),
             actions: [
-              CupertinoDialogAction(
+              TextButton(
                 child: const Text('OK'),
                 onPressed: () {
                   Navigator.pop(context);
@@ -121,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           );
-        }
+        },
       );
     }
   }

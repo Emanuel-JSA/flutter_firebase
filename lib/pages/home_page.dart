@@ -1,32 +1,51 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import '../components/credit_card.dart';
+import '../components/alert_button.dart';
+import 'add_card_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Home'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cartões'),
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: Text(user!.email!),
+              CreditCard(
+                cardNumber: '1234 5678 9012 3456',
+                cardName: 'Cartão de casa',
+                expiryDate: '12/25',
+                cvvCode: '123',
               ),
-              const SizedBox(height: 32.0),
-              CupertinoButton(
-                color: CupertinoColors.systemRed,
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                child: Text('Logout'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  OutlinedButton(
+                    child: Text('+ Add card'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddCardPage()),
+                      );
+                    },
+                  ),
+                  AlertButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    text: 'Logout',
+                  ),
+                ],
               ),
             ],
           ),
