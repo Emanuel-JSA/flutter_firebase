@@ -12,8 +12,3 @@ const kTextMedium = TextStyle(
   fontWeight: FontWeight.w600,
   letterSpacing: 1.5,
 );
-
-const kTextSmall = TextStyle(
-  fontSize: 15.0,
-  fontWeight: FontWeight.w400,
-);
