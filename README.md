@@ -1,16 +1,16 @@
-# flutter_firebase
+This is a Flutter mobile application that allows users to store their credit card information securely using Firebase. The app is built using Flutter, which is a UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase
 
-A new Flutter project.
+## Features
 
-## Getting Started
+The application has the following features:
 
-This project is a starting point for a Flutter application.
+- User authentication with Firebase Authentication
+- Store credit card information securely in Firebase Realtime Database
+- Add, edit, and delete credit card information
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies Used
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The following technologies were used to build this application:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    Flutter - UI toolkit for building natively compiled applications for mobile, web, and desktop
+    Firebase - Backend as a Service (BaaS) platform for building mobile and web applications
